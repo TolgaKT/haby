@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 
-import 'habit_model.dart';
+import '../class_models/habit_model.dart';
 
 class HabitData extends ChangeNotifier {
   List<Habit> _habits = [];

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:haby/model/habit_data.dart';
-import 'package:haby/model/habit_model.dart';
+import 'package:haby/model/class_data/habit_data.dart';
+import 'package:haby/model/class_models/habit_model.dart';
 import 'package:provider/provider.dart';
 
 class HabitController {

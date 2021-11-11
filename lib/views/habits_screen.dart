@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:haby/components/habit_tile.dart';
 import 'package:haby/constants.dart';
+import 'package:haby/model/class_models/habit_model.dart';
 
 class HabitsScreen extends StatelessWidget {
   const HabitsScreen({Key? key}) : super(key: key);
@@ -37,6 +39,17 @@ class HabitsScreen extends StatelessWidget {
                         color: Colors.white,
                       ))
                 ],
+              ),
+              HabitTile(
+                habit: Habit(
+                    habitColor: 'red',
+                    habitDays: [1, 2, 3],
+                    habitId: 1,
+                    habitName: 'Deneme',
+                    shouldRemind: false,
+                    reminderText: 'asd',
+                    remindTime: TimeOfDay.now(),
+                    frequency: [1, 2, 3].length),
               ),
               TextButton(
                   onPressed: () {},
