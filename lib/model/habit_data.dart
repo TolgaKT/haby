@@ -21,7 +21,7 @@ class HabitData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteHabit(Habit habit) {
+  void removeHabit(Habit habit) {
     _habits.remove(habit);
     notifyListeners();
   }
