@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haby/components/habit_adder.dart';
 import 'package:haby/components/habit_tile.dart';
 import 'package:haby/constants.dart';
 import 'package:haby/model/class_models/habit_model.dart';
@@ -52,7 +53,13 @@ class HabitsScreen extends StatelessWidget {
                     frequency: [1, 2, 3].length),
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return const HabitAdder();
+                        });
+                  },
                   child: Row(
                     children: const [
                       Icon(
