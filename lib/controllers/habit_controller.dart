@@ -5,11 +5,11 @@ import 'package:provider/provider.dart';
 
 class HabitController {
   static List<Habit> getHabits(BuildContext context) {
-    return Provider.of<HabitData>(context, listen: true).habits;
+    return Provider.of<HabitData>(context, listen: false).habits;
   }
 
   static int getHabitCount(BuildContext context) {
-    return Provider.of<HabitData>(context, listen: true).habitCount;
+    return Provider.of<HabitData>(context, listen: false).habitCount;
   }
 
   static void addHabit(Habit habit, BuildContext context) {

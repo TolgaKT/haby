@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:haby/components/color_picker.dart';
 import 'package:haby/components/custom_text_field.dart';
@@ -104,8 +105,8 @@ class _HabitAdderState extends State<HabitAdder> {
           ),
           CustomTextField(node: _titleNode, controller: _titleController),
           ColorPicker(parentAction: _updateColor),
-          const Divider(
-            color: Colors.white,
+          const SizedBox(
+            height: 15,
           ),
           CustomDayPicker(
             parentAction: _updateSelectedDays,
@@ -136,8 +137,19 @@ class _HabitAdderState extends State<HabitAdder> {
                     borderRadius: BorderRadius.circular(12),
                     color: kHabitTileBackgroundColor),
                 child: TextButton(
-                  child: Text(_selectedTime.format(context).toString()),
-                  onPressed: () async {},
+                  child: Text(
+                    _selectedTime.format(context).toString(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    DatePicker.showTimePicker(context, showSecondsColumn: false,
+                        onChanged: (time) {
+                      setState(() {
+                        _selectedTime =
+                            TimeOfDay(hour: time.hour, minute: time.minute);
+                      });
+                    });
+                  },
                 ),
               ),
               Flexible(
