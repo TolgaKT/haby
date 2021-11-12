@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+import 'package:haby/components/color_picker.dart';
 import 'package:haby/components/custom_text_field.dart';
 import 'package:haby/constants.dart';
 
@@ -12,7 +14,18 @@ class HabitAdder extends StatefulWidget {
 class _HabitAdderState extends State<HabitAdder> {
   late FocusNode _titleNode;
   final TextEditingController _titleController = TextEditingController();
+  late FocusNode _textNode;
+  final TextEditingController _textController = TextEditingController();
   int _frequency = 1;
+  bool _shouldRemind = true;
+  TimeOfDay _selectedTime = TimeOfDay.now();
+  String _selectedColor = 'red';
+
+  void _updateColor(String newColor) {
+    setState(() {
+      _selectedColor = newColor;
+    });
+  }
 
   @override
   void initState() {
@@ -20,6 +33,8 @@ class _HabitAdderState extends State<HabitAdder> {
     super.initState();
     _titleController.addListener(() {});
     _titleNode = FocusNode();
+    _textController.addListener(() {});
+    _textNode = FocusNode();
   }
 
   @override
@@ -28,6 +43,8 @@ class _HabitAdderState extends State<HabitAdder> {
     super.dispose();
     _titleNode.dispose();
     _titleController.dispose();
+    _textNode.dispose();
+    _textController.dispose();
   }
 
   @override
@@ -66,6 +83,7 @@ class _HabitAdderState extends State<HabitAdder> {
             ],
           ),
           CustomTextField(node: _titleNode, controller: _titleController),
+          ColorPicker(parentAction: _updateColor),
           const Divider(
             color: Colors.white,
           ),
@@ -123,6 +141,44 @@ class _HabitAdderState extends State<HabitAdder> {
                   ),
                 ],
               )
+            ],
+          ),
+          const Divider(
+            color: Colors.white,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Reminder',
+                style: kTitleTextStyle,
+              ),
+              FlutterSwitch(
+                  value: _shouldRemind,
+                  onToggle: (bool val) {
+                    setState(() {
+                      _shouldRemind = val;
+                    });
+                  })
+            ],
+          ),
+          const Divider(
+            color: Colors.white,
+          ),
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: kHabitTileBackgroundColor),
+                child: TextButton(
+                  child: Text(_selectedTime.format(context).toString()),
+                  onPressed: () {},
+                ),
+              ),
+              Flexible(
+                  child: CustomTextField(
+                      node: _textNode, controller: _textController))
             ],
           )
         ],
