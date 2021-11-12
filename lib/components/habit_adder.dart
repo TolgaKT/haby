@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:haby/components/color_picker.dart';
 import 'package:haby/components/custom_text_field.dart';
+import 'package:haby/components/day_picker.dart';
 import 'package:haby/constants.dart';
 
 class HabitAdder extends StatefulWidget {
@@ -87,62 +88,7 @@ class _HabitAdderState extends State<HabitAdder> {
           const Divider(
             color: Colors.white,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Frequency',
-                style: kTitleTextStyle,
-              ),
-              Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: kHabitTileBackgroundColor),
-                    child: TextButton(
-                      child: const Text('-', style: kButtonTextStyle),
-                      onPressed: () {
-                        if (_frequency > 1) {
-                          setState(() {
-                            _frequency--;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    _frequency.toString(),
-                    style: kTitleTextStyle,
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: kHabitTileBackgroundColor),
-                    child: TextButton(
-                      child: const Text(
-                        '+',
-                        style: kButtonTextStyle,
-                      ),
-                      onPressed: () {
-                        if (_frequency < 7) {
-                          setState(() {
-                            _frequency++;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+          const CustomDayPicker(),
           const Divider(
             color: Colors.white,
           ),
