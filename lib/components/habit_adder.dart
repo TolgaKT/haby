@@ -4,6 +4,8 @@ import 'package:haby/components/color_picker.dart';
 import 'package:haby/components/custom_text_field.dart';
 import 'package:haby/components/day_picker.dart';
 import 'package:haby/constants.dart';
+import 'package:haby/controllers/habit_controller.dart';
+import 'package:haby/model/class_models/habit_model.dart';
 
 class HabitAdder extends StatefulWidget {
   const HabitAdder({Key? key}) : super(key: key);
@@ -17,14 +19,20 @@ class _HabitAdderState extends State<HabitAdder> {
   final TextEditingController _titleController = TextEditingController();
   late FocusNode _textNode;
   final TextEditingController _textController = TextEditingController();
-  int _frequency = 1;
   bool _shouldRemind = true;
   TimeOfDay _selectedTime = TimeOfDay.now();
   String _selectedColor = 'red';
+  List<int> _selectedDays = [DateTime.now().weekday];
 
   void _updateColor(String newColor) {
     setState(() {
       _selectedColor = newColor;
+    });
+  }
+
+  void _updateSelectedDays(List<int> days) {
+    setState(() {
+      _selectedDays = days;
     });
   }
 
@@ -75,6 +83,17 @@ class _HabitAdderState extends State<HabitAdder> {
               ),
               TextButton(
                   onPressed: () {
+                    HabitController.addHabit(
+                        Habit(
+                            frequency: _selectedDays.length,
+                            habitColor: _selectedColor,
+                            habitDays: _selectedDays,
+                            habitName: _titleController.text,
+                            shouldRemind: _shouldRemind,
+                            reminderText: _textController.text,
+                            remindTime: _selectedTime,
+                            habitId: 1),
+                        context);
                     Navigator.pop(context);
                   },
                   child: const Text(
@@ -88,7 +107,9 @@ class _HabitAdderState extends State<HabitAdder> {
           const Divider(
             color: Colors.white,
           ),
-          const CustomDayPicker(),
+          CustomDayPicker(
+            parentAction: _updateSelectedDays,
+          ),
           const Divider(
             color: Colors.white,
           ),
@@ -108,9 +129,6 @@ class _HabitAdderState extends State<HabitAdder> {
                   })
             ],
           ),
-          const Divider(
-            color: Colors.white,
-          ),
           Row(
             children: [
               Container(
@@ -119,7 +137,7 @@ class _HabitAdderState extends State<HabitAdder> {
                     color: kHabitTileBackgroundColor),
                 child: TextButton(
                   child: Text(_selectedTime.format(context).toString()),
-                  onPressed: () {},
+                  onPressed: () async {},
                 ),
               ),
               Flexible(

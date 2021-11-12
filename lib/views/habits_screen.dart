@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:haby/components/habit_adder.dart';
-import 'package:haby/components/habit_tile.dart';
+import 'package:haby/components/habit_list.dart';
 import 'package:haby/constants.dart';
-import 'package:haby/model/class_models/habit_model.dart';
 
 class HabitsScreen extends StatelessWidget {
   const HabitsScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +14,7 @@ class HabitsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Center(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,37 +39,32 @@ class HabitsScreen extends StatelessWidget {
                       ))
                 ],
               ),
-              HabitTile(
-                habit: Habit(
-                    habitColor: 'red',
-                    habitDays: [1, 2, 3],
-                    habitId: 1,
-                    habitName: 'Deneme',
-                    shouldRemind: false,
-                    reminderText: 'asd',
-                    remindTime: TimeOfDay.now(),
-                    frequency: [1, 2, 3].length),
+              const Expanded(
+                child: HabitList(),
               ),
-              TextButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return const HabitAdder();
-                        });
-                  },
-                  child: Row(
-                    children: const [
-                      Icon(
-                        Icons.add_circle_outline_rounded,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        'Add habit',
-                        style: kButtonTextStyle,
-                      )
-                    ],
-                  ))
+              SizedBox(
+                width: 120,
+                child: TextButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return const HabitAdder();
+                          });
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.add_circle_outline_rounded,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Add habit',
+                          style: kButtonTextStyle,
+                        )
+                      ],
+                    )),
+              )
             ],
           ),
         ),

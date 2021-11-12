@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:haby/constants.dart';
 
 class CustomDayPicker extends StatefulWidget {
-  const CustomDayPicker({Key? key}) : super(key: key);
+  final ValueChanged<List<int>> parentAction;
+
+  const CustomDayPicker({Key? key, required this.parentAction})
+      : super(key: key);
 
   @override
   _CustomDayPickerState createState() => _CustomDayPickerState();
@@ -18,7 +21,7 @@ class _CustomDayPickerState extends State<CustomDayPicker> {
     'Sat': 6,
     'Sun': 7
   };
-  List<int> selectedDays = [DateTime.now().weekday];
+  List<int> _selectedDays = [DateTime.now().weekday];
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +30,15 @@ class _CustomDayPickerState extends State<CustomDayPicker> {
         children: days.entries
             .map((e) => GestureDetector(
                   onTap: () {
-                    if (selectedDays.contains(e.value)) {
+                    if (_selectedDays.contains(e.value)) {
                       setState(() {
-                        selectedDays.remove(e.value);
+                        _selectedDays.remove(e.value);
+                        widget.parentAction(_selectedDays);
                       });
                     } else {
                       setState(() {
-                        selectedDays.add(e.value);
+                        _selectedDays.add(e.value);
+                        widget.parentAction(_selectedDays);
                       });
                     }
                   },
@@ -41,14 +46,14 @@ class _CustomDayPickerState extends State<CustomDayPicker> {
                     height: 35,
                     width: 35,
                     decoration: BoxDecoration(
-                        color: selectedDays.contains(e.value)
+                        color: _selectedDays.contains(e.value)
                             ? kColorMap['red']
                             : kHabitTileBackgroundColor,
                         shape: BoxShape.circle),
                     child: Center(
                         child: Text(
                       e.key,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     )),
                   ),
                 ))
